@@ -25,9 +25,13 @@ public class Library {
      *
      * @param book    The book to be lent.
      * @param student The student who is going to borrow the book.
-     * @return        Returns true if the operation is successful and false otherwise.
+     * @return Returns true if the operation is successful and false otherwise.
      */
     public boolean lendBook(Book book, Student student) {
+        if (!this.students.contains(student)) {
+            System.out.println("!! Student " + student.getName() + " not registered.");
+            return false;
+        }
         if (!this.books.contains(book)) {
             System.out.println("!! Book " + book.getTitle() + " not registered.");
             return false;
@@ -58,6 +62,7 @@ public class Library {
         }
         if (student.hasBook(book)) {
             this.books.add(book);
+            student.removeBook(book);
             System.out.println(student.getName() + " returned " + book.getTitle() + ".");
             return true;
         }
@@ -72,7 +77,7 @@ public class Library {
      *
      * @param searchByType Specifies the field used for searching (id, name).
      * @param keys         The list of keys to search for.
-     * @return             The list of students that match the search criteria. Returns null if search type is title or author.
+     * @return The list of students that match the search criteria. Returns null if search type is title or author.
      */
     public ArrayList<Student> searchStudents(SearchByType searchByType, ArrayList<Object> keys) {
         // TODO complete function
@@ -85,7 +90,7 @@ public class Library {
      *
      * @param searchByType Specifies the field used for searching (id, title, or author).
      * @param keys         The list of keys to search for.
-     * @return             The list of books that match the search criteria. Returns null if search type is name.
+     * @return The list of books that match the search criteria. Returns null if search type is name.
      */
     public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) {
         // TODO complete function
