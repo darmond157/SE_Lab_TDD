@@ -106,8 +106,26 @@ public class Library {
      * @return The list of books that match the search criteria. Returns null if search type is name.
      */
     public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) {
-        // TODO complete function
-        return null;
+        if(searchByType.equals(SearchByType.NAME)) return null;
+
+        ArrayList<Book> result = new ArrayList<>();
+        for(Book temp : this.books){
+            switch (searchByType){
+                case ID:
+                    int tempId = temp.getId();
+                    if(keys.contains(tempId)) result.add(temp);
+                    break;
+                case TITLE:
+                    String title = temp.getTitle();
+                    if(keys.contains(title)) result.add(temp);
+                    break;
+                case AUTHOR:
+                    String author = temp.getAuthor();
+                    if(keys.contains(author)) result.add(temp);
+                    break;
+            }
+        }
+        return result;
     }
 
     /**

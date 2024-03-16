@@ -139,4 +139,78 @@ class LibraryTest {
         assertEquals(expected,actual);
     }
 
+    @Test
+    void SearchBookTests() {
+        Library library = new Library();
+        Book book1 = new Book("Book-1", "Author-1", 11);
+        Book book2 = new Book("Book-2", "Author-2", 22);
+        Book book3 = new Book("Book-3", "Author-3", 33);
+
+        Student student0 = new Student("student0", 13);
+        Student student1 = new Student("student1", 12);
+        Student student2 = new Student("student2", 11);
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+
+        library.addStudent(student0);
+        library.addStudent(student1);
+        library.addStudent(student2);
+
+        ArrayList<Object> keys = new ArrayList<>();
+        SearchByType searchByType = SearchByType.NAME;
+
+        ArrayList<Book> expected = null;
+
+        ArrayList<Book> actual = library.searchBooks(searchByType, keys);
+        assertEquals(actual, expected);
+
+
+        searchByType = SearchByType.AUTHOR;
+        expected = new ArrayList<>();
+        keys.add("Author-1");
+        keys.add("Author-2");
+        keys.add("Author-10");
+        keys.add("Author-20");
+
+        expected.add(book1);
+        expected.add(book2);
+
+        actual = library.searchBooks(searchByType, keys);
+        assertEquals(new HashSet<Book>(actual), new HashSet<>(expected));
+
+        searchByType = SearchByType.TITLE;
+        expected = new ArrayList<>();
+        keys = new ArrayList<>();
+
+        keys.add("Book-1");
+        keys.add("Book-3");
+        keys.add("Book-33");
+
+        expected.add(book1);
+        expected.add(book3);
+
+        actual = library.searchBooks(searchByType, keys);
+        assertEquals(new HashSet<Book>(actual), new HashSet<>(expected));
+
+
+        searchByType = SearchByType.ID;
+        expected = new ArrayList<>();
+        keys = new ArrayList<>();
+
+        keys.add(11);
+        keys.add(22);
+        keys.add(32);
+        keys.add(33);
+
+        expected.add(book1);
+        expected.add(book2);
+        expected.add(book3);
+
+        actual = library.searchBooks(searchByType, keys);
+        assertEquals(new HashSet<Book>(actual), new HashSet<>(expected));
+    }
+
+
 }
